@@ -5,6 +5,10 @@
         <meta charset="UTF-8">
         <meta name="viewport"
               content="width=device-width, initial-scale=1.0">
+        <link rel="icon"
+              type="image/x-icon"
+              href="path/to/your/favicon.ico">
+
         <title>Meal Recipe Finder</title>
         <link rel="stylesheet"
               href="./src/css/styles.css">
@@ -13,8 +17,11 @@
     </head>
 
     <body>
-        <header>
-            <h1>Meal Recipe Finder</h1>
+        <header class="top-header">
+            <div class="header-left">
+                <h1 class="logo">🍳 Meal Recipe Finder</h1>
+                <p class="tagline">Search meals, filter, save favorites, Order Now</p>
+            </div>
 
             <form id="searchForm">
                 <input type="text"
