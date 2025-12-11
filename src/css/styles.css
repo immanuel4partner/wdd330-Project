@@ -150,12 +150,33 @@ body {
 }
 
 .tag {
-    background: #eef2ff;
     padding: 8px 12px;
     border-radius: 20px;
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+
+
+.header-left {
+    text-align: center;
+    /* Center headline and tagline */
+}
+
+.logo {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+}
+
+.tagline {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #f3f4f6;
+    /* or any accent color */
+    margin-top: 0;
+    opacity: 0.9;
+    /* subtle effect */
 }
 
 .controls-row {
