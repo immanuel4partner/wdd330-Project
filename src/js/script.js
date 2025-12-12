@@ -12,7 +12,7 @@ const API = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 
 
 // ---------------------------
-// Intersection Observer
+// intersection observer
 // ---------------------------
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -24,7 +24,7 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 
 // ---------------------------
-// Fetch Meals
+// fetch meal
 // ---------------------------
 async function fetchMeals(query = '') {
     try {
@@ -46,7 +46,7 @@ async function fetchMeals(query = '') {
 }
 
 // ---------------------------
-// Create Meal Card
+// create meal card
 // ---------------------------
 function createMealCard(meal, parent) {
     const div = document.createElement('div');
@@ -68,7 +68,7 @@ function createMealCard(meal, parent) {
 }
 
 // ---------------------------
-// Favorites Handling
+// favorites handling
 // ---------------------------
 function getFavorites() {
     return JSON.parse(localStorage.getItem('favorites')) || [];
@@ -96,7 +96,7 @@ function removeFavorite(idMeal) {
 }
 
 // ---------------------------
-// Load Favorites
+// load favorites
 // ---------------------------
 function loadFavorites() {
     const list = getFavorites();
@@ -126,7 +126,7 @@ function loadFavorites() {
 }
 
 // ---------------------------
-// Toggle Favorites Section
+// toggle favorites section
 // ---------------------------
 viewFavoritesBtn.addEventListener('click', () => {
     const isHidden = favoritesSection.classList.contains('hidden');
@@ -143,7 +143,7 @@ viewFavoritesBtn.addEventListener('click', () => {
 
 
 // ---------------------------
-// Search Handler
+// search handler
 // ---------------------------
 searchForm.addEventListener('submit', e => {
     e.preventDefault();

@@ -117,16 +117,7 @@
 
 
 
-
- :root {
-     --primary: #1e3a8a;
-     --accent: #2563eb;
-     --bg: #f3f4f6;
-     --card: #ffffff;
-     --shadow: rgba(0, 0, 0, 0.08);
- }
-
- * {
+* {
      box-sizing: border-box;
  }
 
@@ -137,7 +128,7 @@
      color: #111827;
  }
 
- /* HEADER */
+ /* header */
  .top-header {
      background: var(--primary);
      color: white;
@@ -156,7 +147,7 @@
      gap: 0.5rem;
  }
 
- /* RANDOM BUTTON */
+ /* random button */
  .random-btn {
      padding: .6rem 1rem;
      border: none;
@@ -199,7 +190,7 @@
      gap: .8rem;
  }
 
- /* SEARCH */
+ /* search */
  .search-box {
      display: flex;
      gap: .5rem;
@@ -222,14 +213,14 @@
      cursor: pointer;
  }
 
- /* SELECT CATEGORY */
+ /* select category */
  .filter-select {
      padding: .6rem;
      border-radius: 6px;
      border: none;
  }
 
- /* MEALS GRID */
+ /* meal grid */
  .meals-grid {
      padding: 1.5rem;
      display: grid;
@@ -262,7 +253,7 @@
      padding: 0 .5rem;
  }
 
- /* MODAL */
+ /* modal */
  .modal {
      position: fixed;
      inset: 0;
@@ -300,7 +291,7 @@
      cursor: pointer;
  }
 
- /* Favorites Button */
+ /* favorites button */
  .favorites-btn {
      margin-top: 1rem;
      background: #dc2626;
@@ -316,7 +307,7 @@
      background: #b91c1c;
  }
 
- /* Favorites Section */
+ /* favorites section */
  #favoritesSection {
      margin-top: 2rem;
  }
@@ -332,7 +323,7 @@
      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
  }
 
- /* Favorite Button */
+ /* favorite button */
  .fav-btn {
      margin: .5rem auto;
      width: 90%;
@@ -349,14 +340,14 @@
      background: #1e40af;
  }
 
- /* Hidden Utility */
+ /* hidden utility */
  .hidden {
      display: none;
  }
 
- /* ---------------------------
-   Footer Styles
---------------------------- */
+ ---------------------------
+  /*  footer styles */
+--------------------------- 
  .site-footer {
      margin-top: 40px;
      background: #222;
