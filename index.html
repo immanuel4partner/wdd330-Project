@@ -5,22 +5,35 @@
         <meta charset="UTF-8">
         <meta name="viewport"
               content="width=device-width, initial-scale=1.0">
+
         <link rel="icon"
               type="image/x-icon"
-              href="path/to/your/favicon.ico">
+              href="favicon.ico">
+
+        <meta name="description"
+              content="Meal Recipe Finder - Search, filter, and save your favorite meals dynamically using TheMealDB API.">
 
         <title>Meal Recipe Finder</title>
+
         <link rel="stylesheet"
               href="./src/css/styles.css">
+
         <script src="./src/js/script.js"
+                defer></script>
+        <script src="./src/js/index.js"
                 defer></script>
     </head>
 
     <body>
         <header class="top-header">
             <div class="header-left">
-                <h1 class="logo">🍳 Meal Recipe Finder</h1>
-                <p class="tagline">Search meals, filter, save favorites, Order Now</p>
+                <!-- Logo image -->
+                <img src="./public/svg logo.svg"
+                     alt="Meal Recipe Finder Logo"
+                     class="site-logo">
+
+                <h1 class="logo">Meal Recipe Finder</h1>
+                <p class="tagline">Search meals, filter, save favorites...</p>
             </div>
 
             <form id="searchForm">
@@ -32,7 +45,9 @@
             </form>
 
             <button id="viewFavoritesBtn"
-                    class="favorites-btn">View Favorites</button>
+                    class="favorites-btn">
+                View Favorites
+            </button>
         </header>
 
         <main>
@@ -44,7 +59,6 @@
                 <div id="favoritesContainer"></div>
             </section>
         </main>
-
     </body>
 
 </html>

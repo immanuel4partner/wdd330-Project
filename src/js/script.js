@@ -8,6 +8,9 @@ const viewFavoritesBtn = document.getElementById('viewFavoritesBtn');
 
 const API = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 
+
+
+
 // ---------------------------
 // Intersection Observer
 // ---------------------------
@@ -150,3 +153,28 @@ searchForm.addEventListener('submit', e => {
 
 // Initial load
 fetchMeals();
+
+// ---------------------------
+// Dynamic Footer 
+// ---------------------------
+
+(function () {
+    const footer = document.createElement("footer");
+    footer.className = "site-footer";
+
+    const year = new Date().getFullYear();
+
+    footer.innerHTML = `
+        <div class="footer-content">
+            <p>&copy; ${year} Meal Recipe Finder. All rights reserved.</p>
+            <p class="footer-links">
+                <a href="#" class="footer-link">Home</a>
+                <a href="#" class="footer-link">Favorites</a>
+                <a href="#" class="footer-link">About</a>
+                <a href="#" class="footer-link">Order</a>
+            </p>
+        </div>
+    `;
+
+    document.body.appendChild(footer);
+})();

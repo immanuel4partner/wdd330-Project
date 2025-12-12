@@ -6,7 +6,7 @@ fetch(API)
     .then(info => {
         if (!info.meals) return;
 
-        info.meals.forEach(meal => {
+        info.meals.foEach(meal => {
             // Create a card for each meal
             const div = document.createElement('div');
             div.classList.add('meal-card');
