@@ -164,6 +164,47 @@ body {
 
 .random-btn:hover {
     opacity: .9;
+
+    /* Base button style for header actions */
+    .header-buttons button {
+        padding: .6rem 1rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 1rem;
+        line-height: 1.2;
+        min-width: 130px;
+        /* ensures both buttons have similar width */
+        text-align: center;
+        transition: background .2s ease, transform .1s ease;
+    }
+
+    /* Random Meal Button */
+    #randomMealBtn {
+        background: var(--accent);
+        color: white;
+    }
+
+    /* Favorites Button */
+    #viewFavoritesBtn {
+        background: #dc2626;
+        color: white;
+    }
+
+    /* Hover states */
+    #randomMealBtn:hover {
+        background: #059e60;
+    }
+
+    #viewFavoritesBtn:hover {
+        background: #b91c1c;
+    }
+
+    /* Optional active state */
+    .header-buttons button:active {
+        transform: scale(0.97);
+    }
 }
 
 /* Modal */
