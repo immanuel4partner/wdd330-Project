@@ -130,6 +130,26 @@ viewFavoritesBtn.addEventListener('click', () => {
     if (!isHidden) loadFavorites();
 });
 
+// random button handler
+
+const randomMealBtn = document.getElementById("randomMealBtn");
+
+async function fetchRandomMeal() {
+    try {
+        const res = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
+        const data = await res.json();
+
+        if (data.meals && data.meals.length > 0) {
+            showMealDetails(data.meals[0]);
+        }
+    } catch (err) {
+        console.error("Random meal fetch failed", err);
+    }
+}
+
+randomMealBtn.addEventListener("click", fetchRandomMeal);
+
+
 // Search handler
 searchForm.addEventListener('submit', e => {
     e.preventDefault();
