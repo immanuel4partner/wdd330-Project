@@ -183,3 +183,8 @@ mealModal.addEventListener("click", () => {
     if (modalImg) modalImg.classList.remove("modal-img-small");
     mealModal.classList.add("hidden");
 });
+
+closeModal.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mealModal.classList.add('hidden');
+});
