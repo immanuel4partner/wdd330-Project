@@ -5,60 +5,71 @@
         <meta charset="UTF-8">
         <meta name="viewport"
               content="width=device-width, initial-scale=1.0">
-
-        <link rel="icon"
-              type="image/x-icon"
-              href="favicon.ico">
+        <title>Meal Recipe Finder</title>
 
         <meta name="description"
-              content="Meal Recipe Finder - Search, filter, and save your favorite meals dynamically using TheMealDB API.">
-
-        <title>Meal Recipe Finder</title>
+              content="Meal Recipe Finder – Search, filter, and save your favorite meals using TheMealDB API.">
 
         <link rel="stylesheet"
               href="./src/css/styles.css">
 
+        <!-- Scripts -->
         <script src="./src/js/script.js"
-                defer></script>
-        <script src="./src/js/index.js"
                 defer></script>
     </head>
 
     <body>
         <header class="top-header">
             <div class="header-left">
-                <!-- Logo image -->
                 <img src="./public/svg logo.svg"
                      alt="Meal Recipe Finder Logo"
                      class="site-logo">
-
-                <h1 class="logo">Meal Recipe Finder</h1>
-                <p class="tagline">Search meals, filter, save favorites...</p>
+                <div>
+                    <h1 class="logo">Meal Recipe Finder</h1>
+                    <p class="tagline">Search meals, save favorites, view details</p>
+                </div>
             </div>
 
-            <form id="searchForm">
+            <form id="searchForm"
+                  class="search-box">
+                <label for="searchInput"
+                       class="visually-hidden">Search for a meal</label>
                 <input type="text"
                        id="searchInput"
-                       placeholder="Search for a meal..."
+                       placeholder="Search for meals..."
                        required>
                 <button type="submit">Search</button>
             </form>
 
             <button id="viewFavoritesBtn"
-                    class="favorites-btn">
-                View Favorites
-            </button>
+                    class="favorites-btn">View Favorites</button>
         </header>
 
         <main>
-            <section id="meals"></section>
+            <div id="loadingIndicator"
+                 class="loading hidden">Loading...</div>
+
+            <section id="meals"
+                     class="meals-grid"></section>
 
             <section id="favoritesSection"
                      class="hidden">
                 <h2>Your Favorites</h2>
-                <div id="favoritesContainer"></div>
+                <div id="favoritesContainer"
+                     class="meals-grid"></div>
             </section>
         </main>
+
+        <!-- Meal Detail Modal -->
+        <div id="mealModal"
+             class="modal hidden">
+            <div class="modal-content">
+                <button id="closeModal"
+                        class="close-modal">Close</button>
+                <div id="modalBody"></div>
+            </div>
+        </div>
+
     </body>
 
 </html>

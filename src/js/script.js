@@ -1,37 +1,28 @@
+// Elements
 const mealContainer = document.getElementById('meals');
 const searchForm = document.getElementById('searchForm');
 const searchInput = document.getElementById('searchInput');
+const loadingIndicator = document.getElementById('loadingIndicator');
 
 const favoritesSection = document.getElementById('favoritesSection');
 const favoritesContainer = document.getElementById('favoritesContainer');
 const viewFavoritesBtn = document.getElementById('viewFavoritesBtn');
 
+const mealModal = document.getElementById('mealModal');
+const closeModal = document.getElementById('closeModal');
+const modalBody = document.getElementById('modalBody');
+
 const API = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 
-
-
-
-// ---------------------------
-// intersection observer
-// ---------------------------
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.1 });
-
-// ---------------------------
-// fetch meal
-// ---------------------------
+// Fetch Meals
 async function fetchMeals(query = '') {
+    mealContainer.innerHTML = '';
+    showLoading(true);
+
     try {
         const res = await fetch(API + query);
         const data = await res.json();
-
-        mealContainer.innerHTML = '';
+        showLoading(false);
 
         if (!data.meals) {
             mealContainer.innerHTML = '<p>No meals found. Try another search!</p>';
@@ -39,37 +30,51 @@ async function fetchMeals(query = '') {
         }
 
         data.meals.forEach(meal => createMealCard(meal, mealContainer));
-
     } catch {
+        showLoading(false);
         mealContainer.innerHTML = '<p>Something went wrong. Try again.</p>';
     }
 }
 
-// ---------------------------
-// create meal card
-// ---------------------------
-function createMealCard(meal, parent) {
+// Create Meal Card
+function createMealCard(meal, parent, isFavoriteView = false) {
     const div = document.createElement('div');
     div.classList.add('meal-card');
+
+    const favoriteList = getFavorites();
+    const isSaved = favoriteList.some(item => item.idMeal === meal.idMeal);
 
     div.innerHTML = `
         <img src="${meal.strMealThumb}" alt="${meal.strMeal}" loading="lazy">
         <h3>${meal.strMeal}</h3>
-        <p>Category: ${meal.strCategory}</p>
-        <p>${meal.strInstructions.substring(0, 100)}...</p>
-        <button class="fav-btn" data-id="${meal.idMeal}">❤ Save to Favorites</button>
+        <p>${meal.strCategory || ''}</p>
+        <button class="fav-btn ${isSaved ? 'saved' : ''}" data-id="${meal.idMeal}">
+            ${isSaved ? 'Remove Favorite' : 'Save to Favorites'}
+        </button>
     `;
 
     parent.appendChild(div);
-    observer.observe(div);
 
-    // favorite button
-    div.querySelector('.fav-btn').addEventListener('click', () => addFavorite(meal));
+    // Show Details on click
+    div.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('fav-btn')) {
+            showMealDetails(meal);
+        }
+    });
+
+    // Favorite button
+    div.querySelector('.fav-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFavorite(meal);
+    });
 }
 
-// ---------------------------
-// favorites handling
-// ---------------------------
+// Loading indicator
+function showLoading(show) {
+    loadingIndicator.classList.toggle('hidden', !show);
+}
+
+// Favorites handling
 function getFavorites() {
     return JSON.parse(localStorage.getItem('favorites')) || [];
 }
@@ -78,26 +83,34 @@ function saveFavorites(list) {
     localStorage.setItem('favorites', JSON.stringify(list));
 }
 
-function addFavorite(meal) {
+function toggleFavorite(meal) {
     const list = getFavorites();
+    const exists = list.some(item => item.idMeal === meal.idMeal);
 
-    if (!list.some(item => item.idMeal === meal.idMeal)) {
+    if (exists) {
+        removeFavorite(meal.idMeal);
+    } else {
         list.push(meal);
         saveFavorites(list);
-        loadFavorites();
-        alert('Added to favorites!');
     }
+    refreshUI();
 }
 
 function removeFavorite(idMeal) {
-    const list = getFavorites().filter(meal => meal.idMeal !== idMeal);
+    const list = getFavorites().filter(m => m.idMeal !== idMeal);
     saveFavorites(list);
-    loadFavorites();
+    refreshUI();
 }
 
-// ---------------------------
-// load favorites
-// ---------------------------
+function refreshUI() {
+    mealContainer.innerHTML = '';
+    fetchMeals(searchInput.value.trim());
+    if (!favoritesSection.classList.contains('hidden')) {
+        loadFavorites();
+    }
+}
+
+// Load favorites
 function loadFavorites() {
     const list = getFavorites();
     favoritesContainer.innerHTML = '';
@@ -107,74 +120,46 @@ function loadFavorites() {
         return;
     }
 
-    list.forEach(meal => {
-        const div = document.createElement('div');
-        div.classList.add('meal-card');
+    list.forEach(meal => createMealCard(meal, favoritesContainer, true));
+}
 
-        div.innerHTML = `
-            <img src="${meal.strMealThumb}">
-            <h3>${meal.strMeal}</h3>
-            <button class="fav-btn" data-id="${meal.idMeal}">Remove</button>
-        `;
+// Toggle favorites section
+viewFavoritesBtn.addEventListener('click', () => {
+    const isHidden = favoritesSection.classList.toggle('hidden');
+    viewFavoritesBtn.textContent = isHidden ? "View Favorites" : "Hide Favorites";
+    if (!isHidden) loadFavorites();
+});
 
-        favoritesContainer.appendChild(div);
+// Search handler
+searchForm.addEventListener('submit', e => {
+    e.preventDefault();
+    fetchMeals(searchInput.value.trim());
+});
 
-        div.querySelector('.fav-btn').addEventListener('click', () =>
-            removeFavorite(meal.idMeal)
-        );
+// Modal
+// // Show meal details with framed modal and clickable shrink feature
+function showMealDetails(meal) {
+    mealModal.classList.remove('hidden');
+
+    modalBody.innerHTML = `
+        <h2>${meal.strMeal}</h2>
+        <img id="modalImage" class="modal-img" src="${meal.strMealThumb}" alt="${meal.strMeal}">
+        <p><strong>Category:</strong> ${meal.strCategory}</p>
+        <p>${meal.strInstructions}</p>
+    `;
+
+    const modalImg = document.getElementById("modalImage");
+
+    // Shrink the image when clicked so instructions are easier to see
+    modalImg.addEventListener("click", (e) => {
+        e.stopPropagation();
+        modalImg.classList.toggle("modal-img-small");
     });
 }
 
-// ---------------------------
-// toggle favorites section
-// ---------------------------
-viewFavoritesBtn.addEventListener('click', () => {
-    const isHidden = favoritesSection.classList.contains('hidden');
-
-    if (isHidden) {
-        favoritesSection.classList.remove('hidden');
-        loadFavorites();
-        viewFavoritesBtn.textContent = "Hide Favorites";
-    } else {
-        favoritesSection.classList.add('hidden');
-        viewFavoritesBtn.textContent = "View Favorites";
-    }
+// Click outside the image + content closes modal and resets image size
+mealModal.addEventListener("click", () => {
+    const modalImg = document.getElementById("modalImage");
+    if (modalImg) modalImg.classList.remove("modal-img-small");
+    mealModal.classList.add("hidden");
 });
-
-
-// ---------------------------
-// search handler
-// ---------------------------
-searchForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const query = searchInput.value.trim();
-    if (query) fetchMeals(query);
-});
-
-// Initial load
-fetchMeals();
-
-// ---------------------------
-// Dynamic Footer 
-// ---------------------------
-
-(function () {
-    const footer = document.createElement("footer");
-    footer.className = "site-footer";
-
-    const year = new Date().getFullYear();
-
-    footer.innerHTML = `
-        <div class="footer-content">
-            <p>&copy; ${year} Meal Recipe Finder. All rights reserved.</p>
-            <p class="footer-links">
-                <a href="#" class="footer-link">Home</a>
-                <a href="#" class="footer-link">Favorites</a>
-                <a href="#" class="footer-link">About</a>
-                <a href="#" class="footer-link">Order</a>
-            </p>
-        </div>
-    `;
-
-    document.body.appendChild(footer);
-})();
