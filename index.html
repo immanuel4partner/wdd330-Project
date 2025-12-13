@@ -6,14 +6,11 @@
         <meta name="viewport"
               content="width=device-width, initial-scale=1.0">
         <title>Meal Recipe Finder</title>
-
         <meta name="description"
               content="Meal Recipe Finder – Search, filter, and save your favorite meals using TheMealDB API.">
 
         <link rel="stylesheet"
               href="./src/css/styles.css">
-
-        <!-- Scripts -->
         <script src="./src/js/script.js"
                 defer></script>
     </head>
@@ -40,11 +37,13 @@
                        required>
                 <button type="submit">Search</button>
             </form>
-            <!-- Put the random meal button here -->
+
             <div class="header-buttons">
-                <button id="randomMealBtn"
+                <button type="button"
+                        id="randomMealBtn"
                         class="random-btn">Random Meal</button>
-                <button id="viewFavoritesBtn"
+                <button type="button"
+                        id="viewFavoritesBtn"
                         class="favorites-btn">View Favorites</button>
             </div>
         </header>
@@ -73,7 +72,6 @@
                 <div id="modalBody"></div>
             </div>
         </div>
-
     </body>
 
 </html>
